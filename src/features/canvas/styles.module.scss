@@ -1,0 +1,11 @@
+.container {
+  background-color: lightblue;
+  overflow-x: auto;
+}
+
+.sprints {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 1em;
+}
