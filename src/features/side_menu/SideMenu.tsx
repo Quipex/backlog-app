@@ -26,7 +26,7 @@ const SideMenu: React.FC<ISideMenuProps> = (
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
-          {stories.map((s, index) => <UserStoryCard story={s} index={index}/>)}
+          {stories.map((s, index) => <UserStoryCard key={s.id} story={s} index={index}/>)}
           {provided.placeholder}
         </div>
       )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Canvas from "../../features/canvas";
+import Canvas from "../../features/canvas/Canvas";
 import SideMenu from "../../features/side_menu/SideMenu";
 import styles from './styles.module.scss';
 import {useSelector} from "react-redux";
