@@ -29,7 +29,6 @@ export const plannerSlice = createSlice({
         const sprint = state.sprints.find(sp => sp.id === source.droppableId);
         targetStory = sprint?.stories.find(st => st.id === targetStoryId);
       }
-      console.log('target story', targetStory);
       if (!targetStory) return;
 
       if (source.droppableId === BACKLOG) {
