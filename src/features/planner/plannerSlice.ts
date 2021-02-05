@@ -19,50 +19,33 @@ export const plannerSlice = createSlice({
   name: 'planner',
   initialState,
   reducers: {
-    moveCard: (state, {payload: {draggableId, source, destination}}: PayloadAction<DropResult>) => {
+    moveCard: (state, {payload: {draggableId: targetStoryId, source, destination}}: PayloadAction<DropResult>) => {
       if (!destination) return;
 
-      // REMOVE
-      let story: UserStoryData | undefined = undefined;
+      let targetStory;
       if (source.droppableId === BACKLOG) {
-        state.backlog.filter(st => {
-          if (st.id === draggableId) {
-            story = st;
-            return true;
-          }
-          return false;
-        });
+        targetStory = state.backlog.find(st => st.id === targetStoryId);
       } else {
-        state.sprints.map(sprint => {
-          if (sprint.id === source.droppableId) {
-            return {
-              ...sprint,
-              stories: sprint.stories.filter(st => {
-                if (st.id === draggableId) {
-                  story = st;
-                  return true;
-                }
-                return false;
-              })
-            }
-          } else {
-            return sprint;
-          }
-        });
+        const sprint = state.sprints.find(sp => sp.id === source.droppableId);
+        targetStory = sprint?.stories.find(st => st.id === targetStoryId);
+      }
+      console.log('target story', targetStory);
+      if (!targetStory) return;
+
+      if (source.droppableId === BACKLOG) {
+        state.backlog = state.backlog.filter(st => st.id !== targetStoryId)
+      } else {
+        const sprint = state.sprints.find(sp => sp.id === source.droppableId);
+        if (sprint) {
+          sprint.stories = sprint.stories.filter(st => st.id !== targetStoryId)
+        }
       }
 
-      if (story === undefined) return;
-
-      // ADD
       if (destination.droppableId === BACKLOG) {
-        state.backlog.splice(destination.index, 0, story);
+        state.backlog.splice(destination.index, 0, targetStory);
       } else {
-        state.sprints.map(sprint => {
-          if (sprint.id === destination.droppableId) {
-            sprint.stories.splice(destination.index, 0, story as UserStoryData);
-          }
-          return sprint;
-        })
+        const sprint = state.sprints.find(sp => sp.id === destination.droppableId);
+        sprint?.stories.splice(destination.index, 0, targetStory);
       }
     }
   }
