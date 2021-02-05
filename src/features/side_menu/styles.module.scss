@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #99d6ea;
+  flex-shrink: 0;
+}
+
+.menus {
+  background-color: #deffad;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  padding: 1em;
+}
+
+.stories {
+  background-color: #faffc5;
+  flex-grow: 1;
+  padding: 1em;
+
+  display: flex;
+  flex-direction: column;
+}
