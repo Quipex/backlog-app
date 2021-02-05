@@ -2,9 +2,10 @@ import React from 'react';
 import {SprintData} from "./model";
 import UserStoryCard from "../user_story/UserStory";
 import styles from './styles.module.scss';
+import {Droppable} from "react-beautiful-dnd";
 
 const Sprint: React.FC<SprintData> = (
-  {name, stories, maxPoints}
+  {id, name, stories, maxPoints}
 ) => {
   const points = stories.map(st => st.points).reduce((prev, curr) => prev + curr);
 
@@ -18,9 +19,18 @@ const Sprint: React.FC<SprintData> = (
           {`${points} / ${maxPoints}`}
         </div>
       </div>
-      <div className={styles.stories}>
-        {stories.map(st => (<UserStoryCard story={st}/>))}
-      </div>
+      <Droppable droppableId={id}>
+        {provided => (
+          <div
+            className={styles.stories}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {stories.map((st, index) => <UserStoryCard story={st} index={index}/>)}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };
