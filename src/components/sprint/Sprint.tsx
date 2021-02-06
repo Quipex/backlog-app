@@ -3,6 +3,7 @@ import {SprintData} from "./model";
 import styles from './styles.module.scss';
 import {UserStoryData} from "../user_story/model";
 import StoriesDroppable from "../stories_droppable/StoriesDroppable";
+import {Button} from "semantic-ui-react";
 
 export function countPoints(stories: UserStoryData[]) {
   return stories.length !== 0 ? stories.map(st => st.points).reduce((prev, curr) => prev + curr) : 0;
@@ -11,10 +12,11 @@ export function countPoints(stories: UserStoryData[]) {
 export interface ISprintProps {
   sprint: SprintData;
   isDragging: boolean;
+  setEditing?: () => void;
 }
 
 const Sprint: React.FC<ISprintProps> = (
-  {sprint: {id, name, stories, maxPoints, allowedToDrop}, isDragging}
+  {sprint: {id, name, stories, maxPoints, allowedToDrop}, isDragging, setEditing}
 ) => {
   const points = countPoints(stories);
   const [overflowed, setOverflowed] = useState<boolean>(false);
@@ -29,6 +31,7 @@ const Sprint: React.FC<ISprintProps> = (
         <div className={styles.title}>
           {name}
         </div>
+        <Button onClick={setEditing} icon="pencil" compact />
         <div className={`${styles.capacity} ${overflowed ? styles.capacity_overflowed : ''}`}>
           {`${points} / ${maxPoints}`}
         </div>

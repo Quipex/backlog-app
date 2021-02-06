@@ -6,6 +6,7 @@ import {Draggable} from "react-beautiful-dnd";
 export interface IUserStoryProps {
   index: number;
   story: UserStoryData;
+  setEditing: () => void;
 }
 
 const color = (priority: Risk) => {
@@ -22,7 +23,7 @@ const color = (priority: Risk) => {
 }
 
 const UserStoryCard: React.FC<IUserStoryProps> = (
-  {story: {id, dependencies, description, name, points, priority, risk}, index}
+  {story: {id, name, points, priority, risk}, index, setEditing}
 ) => (
   <Draggable draggableId={id} index={index}>
     {provided => (
@@ -31,6 +32,7 @@ const UserStoryCard: React.FC<IUserStoryProps> = (
         {...provided.dragHandleProps}
         ref={provided.innerRef}
         className={`${styles.container} ${color(risk)}`}
+        onClick={setEditing}
       >
         <div className={styles.points_container}>
           <div className={styles.points}>

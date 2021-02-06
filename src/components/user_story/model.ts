@@ -1,5 +1,6 @@
 import {v4} from "uuid";
 import {getRandomInt, randomEnum} from "../../utils/random";
+import _ from "lodash";
 
 export interface UserStoryData {
   id: string;
@@ -21,6 +22,14 @@ export enum Priority {
   HIGH,
   MEDIUM,
   LOW
+}
+
+export const getOptions = (Enum: any) => {
+  return Object.keys(Enum).filter(k => !_.isNumber(Enum[k])).map(key => ({
+    key,
+    value: key,
+    text: Enum[key]
+  }))
 }
 
 export const randomStory: () => UserStoryData = () => {

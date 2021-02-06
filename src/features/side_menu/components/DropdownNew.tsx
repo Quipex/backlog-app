@@ -1,23 +1,29 @@
 import React from 'react';
 import {Dropdown, DropdownItem, DropdownMenu} from "semantic-ui-react";
+import {useDispatch} from "react-redux";
+import { setEditingStory, setEditingSprint } from '../../editing/editingSlice';
 
 export interface IDropdownNewProps {
 }
 
-const DropdownNew: React.FC<IDropdownNewProps> = (props) => (
-  <Dropdown
-    text="Create new"
-    icon="plus"
-    button
-    floating
-    labeled
-    className="icon"
-  >
-    <DropdownMenu>
-      <DropdownItem>User story...</DropdownItem>
-      <DropdownItem>Sprint...</DropdownItem>
-    </DropdownMenu>
-  </Dropdown>
-);
+const DropdownNew: React.FC<IDropdownNewProps> = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <Dropdown
+      text="Create new"
+      icon="plus"
+      button
+      floating
+      labeled
+      className="icon"
+    >
+      <DropdownMenu>
+        <DropdownItem onClick={() => dispatch(setEditingStory({} as any))}>User story...</DropdownItem>
+        <DropdownItem onClick={() => dispatch(setEditingSprint({} as any))}>Sprint...</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+};
 
 export default DropdownNew;

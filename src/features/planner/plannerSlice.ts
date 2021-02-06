@@ -5,6 +5,8 @@ import {RootState} from "../../app/store";
 import {randomSprint, SprintData} from "../../components/sprint/model";
 import {DraggableLocation, DragStart, DropResult} from "react-beautiful-dnd";
 import {countPoints} from "../../components/sprint/Sprint";
+import {StoryEditingData} from "../editing/editingSlice";
+import {v4} from "uuid";
 
 interface PlannerState {
   backlog: UserStoryData[];
@@ -56,6 +58,7 @@ export const plannerSlice = createSlice({
         sprint?.stories.splice(destination.index, 0, targetStory);
       }
     },
+
     updateDroppables: (state, {payload: {source}}: PayloadAction<DragStart>) => {
       const targetStory = getStory(state, source);
       if (!targetStory) return;
@@ -67,15 +70,43 @@ export const plannerSlice = createSlice({
         }
       })
     },
+
     setIsDragged: (state, {payload}: PayloadAction<boolean>) => {
       state.currentlyDragged = payload;
+    },
+
+    saveSprint: (state, {payload}: PayloadAction<SprintData>) => {
+      if (payload.id) {
+        const sprintIndex = state.sprints.findIndex(sp => sp.id === payload.id)
+        state.sprints[sprintIndex] = {
+          ...payload,
+          id: v4()
+        };
+      } else {
+        const sprintLength = state.sprints.length;
+        state.sprints[sprintLength] = payload;
+      }
+    },
+
+    saveStory: (state, {payload: {content, source}}: PayloadAction<StoryEditingData>) => {
+      if (source) {
+        if (source.id === BACKLOG) {
+          state.backlog[source.index] = content;
+        } else {
+          const targetSprint = state.sprints.find(sp => sp.id === source.id);
+          if (!targetSprint) return;
+          targetSprint.stories[source.index] = content
+        }
+      } else {
+        state.backlog.splice(0, 0, {...content, id: v4()});
+      }
     }
   }
 });
 
 export const BACKLOG = 'Backlog';
 
-export const {moveCard, updateDroppables, setIsDragged} = plannerSlice.actions;
+export const {moveCard, updateDroppables, setIsDragged, saveSprint, saveStory} = plannerSlice.actions;
 
 export const selectBacklog = (state: RootState) => state.planner.backlog;
 export const selectSprints = (state: RootState) => state.planner.sprints;
