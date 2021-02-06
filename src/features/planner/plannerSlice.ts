@@ -5,7 +5,7 @@ import {RootState} from "../../app/store";
 import {randomSprint, SprintData} from "../../components/sprint/model";
 import {DraggableLocation, DragStart, DropResult} from "react-beautiful-dnd";
 import {countPoints} from "../../components/sprint/Sprint";
-import {StoryEditingData} from "../editing/editingSlice";
+import {SourceProps, StoryEditingData} from "../editing/editingSlice";
 import {v4} from "uuid";
 
 interface PlannerState {
@@ -31,6 +31,17 @@ const getStory = (state: PlannerState, source: DraggableLocation) => {
   return targetStory
 }
 
+function removeStoryFromState(source: SourceProps, state: PlannerState, targetStoryId: string) {
+  if (source.droppableId === BACKLOG) {
+    state.backlog = state.backlog.filter(st => st.id !== targetStoryId)
+  } else {
+    const sprint = state.sprints.find(sp => sp.id === source.droppableId);
+    if (sprint) {
+      sprint.stories = sprint.stories.filter(st => st.id !== targetStoryId)
+    }
+  }
+}
+
 export const plannerSlice = createSlice({
   name: 'planner',
   initialState,
@@ -42,14 +53,7 @@ export const plannerSlice = createSlice({
       const targetStory = getStory(state, source);
       if (!targetStory) return;
 
-      if (source.droppableId === BACKLOG) {
-        state.backlog = state.backlog.filter(st => st.id !== targetStoryId)
-      } else {
-        const sprint = state.sprints.find(sp => sp.id === source.droppableId);
-        if (sprint) {
-          sprint.stories = sprint.stories.filter(st => st.id !== targetStoryId)
-        }
-      }
+      removeStoryFromState(source, state, targetStoryId);
 
       if (destination.droppableId === BACKLOG) {
         state.backlog.splice(destination.index, 0, targetStory);
@@ -91,23 +95,41 @@ export const plannerSlice = createSlice({
 
     saveStory: (state, {payload: {content, source}}: PayloadAction<StoryEditingData>) => {
       if (source) {
-        if (source.id === BACKLOG) {
+        if (source.droppableId === BACKLOG) {
           state.backlog[source.index] = content;
         } else {
-          const targetSprint = state.sprints.find(sp => sp.id === source.id);
+          const targetSprint = state.sprints.find(sp => sp.id === source.droppableId);
           if (!targetSprint) return;
           targetSprint.stories[source.index] = content
         }
       } else {
         state.backlog.splice(0, 0, {...content, id: v4()});
       }
+    },
+
+    removeSprint: (state, {payload}: PayloadAction<SprintData>) => {
+      if (payload.stories.length !== 0) return;
+      state.sprints = state.sprints.filter(sp => sp.id !== payload.id);
+    },
+
+    removeStory: (state, {payload: {source, content: targetStory}}: PayloadAction<StoryEditingData>) => {
+      if (!source) return;
+      removeStoryFromState(source, state, targetStory.id);
     }
   }
 });
 
 export const BACKLOG = 'Backlog';
 
-export const {moveCard, updateDroppables, setIsDragged, saveSprint, saveStory} = plannerSlice.actions;
+export const {
+  moveCard,
+  updateDroppables,
+  setIsDragged,
+  saveSprint,
+  saveStory,
+  removeStory,
+  removeSprint
+} = plannerSlice.actions;
 
 export const selectBacklog = (state: RootState) => state.planner.backlog;
 export const selectSprints = (state: RootState) => state.planner.sprints;

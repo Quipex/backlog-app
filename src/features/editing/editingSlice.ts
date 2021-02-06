@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SprintData} from "../../components/sprint/model";
 import {UserStoryData} from "../../components/user_story/model";
 import {RootState} from "../../app/store";
-import {saveSprint, saveStory} from "../planner/plannerSlice";
+import {saveSprint, saveStory, removeSprint, removeStory} from "../planner/plannerSlice";
 
 interface EditingState {
   sprint: SprintData | undefined;
@@ -11,15 +11,17 @@ interface EditingState {
 
 export interface StoryEditingData {
   content: UserStoryData,
-  source?: {
-    id: string,
-    index: number
-  }
+  source?: SourceProps;
 }
 
 const initialState: EditingState = {
   sprint: undefined,
   story: undefined
+}
+
+export interface SourceProps {
+  droppableId: string;
+  index: number;
 }
 
 export const editingSlice = createSlice({
@@ -38,6 +40,8 @@ export const editingSlice = createSlice({
     builder
       .addCase(saveSprint, state => state.sprint = undefined)
       .addCase(saveStory, state => state.story = undefined)
+      .addCase(removeStory, state => state.story = undefined)
+      .addCase(removeSprint, state => state.sprint = undefined)
   }
 })
 

@@ -34,7 +34,7 @@ const StoriesDroppable: React.FC<IStoriesDroppableProps> = (
               story={s}
               index={index}
               setEditing={() => dispatch(setEditingStory({
-                source: {id: droppableProps.droppableId, index},
+                source: {droppableId: droppableProps.droppableId, index},
                 content: s
               }))}
             />
