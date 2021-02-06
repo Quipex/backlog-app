@@ -1,36 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SprintData} from "./model";
-import UserStoryCard from "../user_story/UserStory";
 import styles from './styles.module.scss';
-import {Droppable} from "react-beautiful-dnd";
+import {UserStoryData} from "../user_story/model";
+import StoriesDroppable from "../stories_droppable/StoriesDroppable";
 
-const Sprint: React.FC<SprintData> = (
-  {id, name, stories, maxPoints}
+export function countPoints(stories: UserStoryData[]) {
+  return stories.length !== 0 ? stories.map(st => st.points).reduce((prev, curr) => prev + curr) : 0;
+}
+
+export interface ISprintProps {
+  sprint: SprintData;
+}
+
+const Sprint: React.FC<ISprintProps> = (
+  {sprint: {id, name, stories, maxPoints, allowedToDrop}}
 ) => {
-  const points = stories.length !== 0 ? stories.map(st => st.points).reduce((prev, curr) => prev + curr) : 0;
+  const points = countPoints(stories);
+  const [overflowed, setOverflowed] = useState<boolean>(false);
+
+  useEffect(() => {
+    setOverflowed(maxPoints < points);
+  }, [maxPoints, points]);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${overflowed ? styles.container_overflowed : ''}`}>
       <div className={styles.header}>
         <div className={styles.title}>
           {name}
         </div>
-        <div className={styles.capacity}>
+        <div className={`${styles.capacity} ${overflowed ? styles.capacity_overflowed : ''}`}>
           {`${points} / ${maxPoints}`}
         </div>
       </div>
-      <Droppable droppableId={id}>
-        {provided => (
-          <div
-            className={styles.stories}
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {stories.map((st, index) => <UserStoryCard key={st.id} story={st} index={index}/>)}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <StoriesDroppable
+        droppableProps={{droppableId: id, isDropDisabled: !allowedToDrop}}
+        className={`${styles.stories} ${allowedToDrop ? styles.allowedToDrop : styles.notAllowedToDrop}`}
+        stories={stories}
+      />
     </div>
   );
 };

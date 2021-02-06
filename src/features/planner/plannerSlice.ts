@@ -3,7 +3,8 @@ import _ from "lodash";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../../app/store";
 import {randomSprint, SprintData} from "../../components/sprint/model";
-import {DropResult} from "react-beautiful-dnd";
+import {DraggableLocation, DragStart, DropResult} from "react-beautiful-dnd";
+import {countPoints} from "../../components/sprint/Sprint";
 
 interface PlannerState {
   backlog: UserStoryData[];
@@ -15,20 +16,26 @@ const initialState: PlannerState = {
   sprints: _.times(5).map(() => randomSprint())
 }
 
+const getStory = (state: PlannerState, source: DraggableLocation) => {
+  let targetStory;
+  if (source.droppableId === BACKLOG) {
+    targetStory = state.backlog[source.index];
+  } else {
+    const sprint = state.sprints.find(sp => sp.id === source.droppableId);
+    targetStory = sprint?.stories[source.index];
+  }
+  return targetStory
+}
+
 export const plannerSlice = createSlice({
   name: 'planner',
   initialState,
   reducers: {
     moveCard: (state, {payload: {draggableId: targetStoryId, source, destination}}: PayloadAction<DropResult>) => {
+      state.sprints.forEach(sp => sp.allowedToDrop = true);
       if (!destination) return;
 
-      let targetStory;
-      if (source.droppableId === BACKLOG) {
-        targetStory = state.backlog.find(st => st.id === targetStoryId);
-      } else {
-        const sprint = state.sprints.find(sp => sp.id === source.droppableId);
-        targetStory = sprint?.stories.find(st => st.id === targetStoryId);
-      }
+      const targetStory = getStory(state, source);
       if (!targetStory) return;
 
       if (source.droppableId === BACKLOG) {
@@ -46,13 +53,25 @@ export const plannerSlice = createSlice({
         const sprint = state.sprints.find(sp => sp.id === destination.droppableId);
         sprint?.stories.splice(destination.index, 0, targetStory);
       }
-    }
+    },
+    updateDroppables: (state, {payload: {source}}: PayloadAction<DragStart>) => {
+      const targetStory = getStory(state, source);
+      if (!targetStory) return;
+
+      state.sprints.forEach(sp => {
+        if (sp.id !== source.droppableId) {
+          const points = countPoints(sp.stories);
+          sp.allowedToDrop = sp.maxPoints >= (points + targetStory.points);
+        }
+      })
+    },
+
   }
 });
 
 export const BACKLOG = 'Backlog';
 
-export const {moveCard} = plannerSlice.actions;
+export const {moveCard, updateDroppables} = plannerSlice.actions;
 
 export const selectBacklog = (state: RootState) => state.planner.backlog;
 export const selectSprints = (state: RootState) => state.planner.sprints;

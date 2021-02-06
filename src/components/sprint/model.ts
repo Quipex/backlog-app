@@ -8,6 +8,7 @@ export interface SprintData {
   name: string;
   stories: UserStoryData[];
   maxPoints: number;
+  allowedToDrop: boolean;
 }
 
 export function randomSprint(): SprintData {
@@ -16,6 +17,7 @@ export function randomSprint(): SprintData {
     id,
     name: id,
     maxPoints: 20,
-    stories: _.times(getRandomInt(1, 4)).map(() => randomStory())
+    stories: _.times(getRandomInt(1, 4)).map(() => randomStory()),
+    allowedToDrop: true
   })
 }

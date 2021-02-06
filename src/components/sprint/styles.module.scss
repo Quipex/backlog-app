@@ -5,6 +5,11 @@
   flex-direction: column;
   max-width: 330px + 14px;
   margin-right: 0.5em;
+  transition: box-shadow 0.5s ease;
+
+  &_overflowed {
+    box-shadow: 0 0 4px 1px #ff7777;
+  }
 }
 
 .header {
@@ -13,6 +18,7 @@
   padding-bottom: 0.5em;
   align-items: center;
   gap: 3em;
+  user-select: none;
 }
 
 .title {
@@ -33,9 +39,22 @@
   align-items: center;
   justify-content: center;
   padding: 0.3em 0.5em;
+
+  &_overflowed {
+    background-color: #ff7777;
+  }
 }
 
 .stories {
   flex-grow: 1;
   background-color: #e0e0e0;
+  border: 3px dotted #aeaeae;
+}
+
+.allowedToDrop {
+  background-color: #C6E2AA;
+}
+
+.notAllowedToDrop {
+  background-color: #ff7777;
 }

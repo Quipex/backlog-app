@@ -13,7 +13,7 @@ const Canvas: React.FC<ICanvasProps> = (
 ) => (
   <div className={`${styles.container} ${className || ''}`}>
     <div className={styles.sprints}>
-      {sprints.map(sp => <Sprint key={sp.id} id={sp.id} name={sp.name} stories={sp.stories} maxPoints={sp.maxPoints}/>)}
+      {sprints.map(sp => <Sprint key={sp.id} sprint={sp} />)}
     </div>
   </div>
 );
