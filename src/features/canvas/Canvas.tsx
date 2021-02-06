@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {SprintData} from "../../components/sprint/model";
 import Sprint from "../../components/sprint/Sprint";
 import {useDispatch} from "react-redux";
-import { setEditingSprint } from '../editing/editingSlice';
+import {setEditingSprint} from '../editing/editingSlice';
 
 export interface ICanvasProps {
   className: string;

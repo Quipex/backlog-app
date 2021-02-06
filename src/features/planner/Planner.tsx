@@ -12,7 +12,7 @@ const Planner: React.FC = () => {
 
   return (
     <>
-      <Canvas className={styles.canvas} sprints={sprints} isDragging={isDragging} />
+      <Canvas className={styles.canvas} sprints={sprints} isDragging={isDragging}/>
       <SideMenu stories={stories} isDragging={isDragging}/>
     </>
   );

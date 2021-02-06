@@ -74,7 +74,7 @@ const StoryModal: React.FC<IStoryModalProps> = ({editingData, save, onClose}) =>
               // @ts-ignore
               onChange={(ev, {value}) => setValues(prev => ({...prev, points: +value}))}
             />
-            <Button type="submit" color="olive" content="Save" />
+            <Button type="submit" color="olive" content="Save"/>
           </Form>
         )}
       </ModalContent>

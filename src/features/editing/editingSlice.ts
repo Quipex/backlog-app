@@ -2,12 +2,13 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SprintData} from "../../components/sprint/model";
 import {UserStoryData} from "../../components/user_story/model";
 import {RootState} from "../../app/store";
-import { saveSprint, saveStory } from "../planner/plannerSlice";
+import {saveSprint, saveStory} from "../planner/plannerSlice";
 
 interface EditingState {
   sprint: SprintData | undefined;
   story: StoryEditingData | undefined;
 }
+
 export interface StoryEditingData {
   content: UserStoryData,
   source?: {

@@ -3,7 +3,7 @@ import styles from './App.module.scss';
 import Planner from "./features/planner/Planner";
 import {DragDropContext} from "react-beautiful-dnd";
 import {useDispatch} from "react-redux";
-import {moveCard, updateDroppables, setIsDragged} from './features/planner/plannerSlice';
+import {moveCard, setIsDragged, updateDroppables} from './features/planner/plannerSlice';
 import Editing from "./features/editing/Editing";
 
 function App() {

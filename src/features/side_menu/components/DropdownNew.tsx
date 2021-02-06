@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dropdown, DropdownItem, DropdownMenu} from "semantic-ui-react";
 import {useDispatch} from "react-redux";
-import { setEditingStory, setEditingSprint } from '../../editing/editingSlice';
+import {setEditingSprint, setEditingStory} from '../../editing/editingSlice';
 
 export interface IDropdownNewProps {
 }

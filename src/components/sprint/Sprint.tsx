@@ -31,7 +31,7 @@ const Sprint: React.FC<ISprintProps> = (
         <div className={styles.title}>
           {name}
         </div>
-        <Button onClick={setEditing} icon="pencil" compact />
+        <Button onClick={setEditing} icon="pencil" compact/>
         <div className={`${styles.capacity} ${overflowed ? styles.capacity_overflowed : ''}`}>
           {`${points} / ${maxPoints}`}
         </div>
