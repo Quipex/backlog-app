@@ -33,16 +33,17 @@
 }
 
 .points {
+  $size: 90%;
   border-radius: 50%;
   background-color: #31B5CC;
   color: white;
-  height: 100%;
-  width: 100%;
+  height: $size;
+  width: $size;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .name {
