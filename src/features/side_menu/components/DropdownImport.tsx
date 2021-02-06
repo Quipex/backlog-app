@@ -4,10 +4,10 @@ import {Dropdown, DropdownItem, DropdownMenu} from "semantic-ui-react";
 export interface IDropdownImportProps {
 }
 
-const DropdownImport: React.FC<IDropdownImportProps> = (props) => (
+const DropdownImport: React.FC<IDropdownImportProps> = () => (
     <Dropdown
         icon="file"
-        text="Import/Export"
+        text="Storage..."
         floating
         labeled
         button

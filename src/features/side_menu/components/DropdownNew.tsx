@@ -11,7 +11,7 @@ const DropdownNew: React.FC<IDropdownNewProps> = () => {
 
   return (
     <Dropdown
-      text="Create new"
+      text="Create..."
       icon="plus"
       button
       floating

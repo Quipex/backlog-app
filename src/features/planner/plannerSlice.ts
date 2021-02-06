@@ -78,13 +78,14 @@ export const plannerSlice = createSlice({
     saveSprint: (state, {payload}: PayloadAction<SprintData>) => {
       if (payload.id) {
         const sprintIndex = state.sprints.findIndex(sp => sp.id === payload.id)
-        state.sprints[sprintIndex] = {
-          ...payload,
-          id: v4()
-        };
+        state.sprints[sprintIndex] = payload;
       } else {
         const sprintLength = state.sprints.length;
-        state.sprints[sprintLength] = payload;
+        state.sprints[sprintLength] = {
+          ...payload,
+          id: v4(),
+          stories: []
+        };
       }
     },
 

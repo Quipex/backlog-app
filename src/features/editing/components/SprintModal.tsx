@@ -42,7 +42,7 @@ const SprintModal: React.FC<ISprintModalProps> = (
               // @ts-ignore
               onChange={(ev, {value}) => setValues(prev => ({...prev, maxPoints: +value}))}
             />
-            <Button type="submit" content="Save"/>
+            <Button type="submit" content="Save" color="olive" />
           </Form>
         )}
       </ModalContent>
