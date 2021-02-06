@@ -1,8 +1,8 @@
 import React from 'react';
 import UserStoryCard from "../user_story/UserStory";
 import {Droppable} from "react-beautiful-dnd";
-import {colorOf} from "../../features/side_menu/SideMenu";
 import {UserStoryData} from "../user_story/model";
+import styles from './styles.module.scss';
 
 export interface IStoriesDroppableProps {
   droppableProps: {
@@ -19,9 +19,8 @@ const StoriesDroppable: React.FC<IStoriesDroppableProps> = (
   <Droppable {...droppableProps}>
     {(provided, snapshot) => (
       <div
-        className={className}
+        className={`${className} ${snapshot.draggingOverWith ? styles.allowedToDrop : ''}`}
         ref={provided.innerRef}
-        style={{backgroundColor: colorOf(snapshot)}}
         {...provided.droppableProps}
       >
         {stories.map((s, index) => <UserStoryCard key={s.id} story={s} index={index}/>)}

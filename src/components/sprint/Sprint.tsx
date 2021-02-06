@@ -10,10 +10,11 @@ export function countPoints(stories: UserStoryData[]) {
 
 export interface ISprintProps {
   sprint: SprintData;
+  isDragging: boolean;
 }
 
 const Sprint: React.FC<ISprintProps> = (
-  {sprint: {id, name, stories, maxPoints, allowedToDrop}}
+  {sprint: {id, name, stories, maxPoints, allowedToDrop}, isDragging}
 ) => {
   const points = countPoints(stories);
   const [overflowed, setOverflowed] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const Sprint: React.FC<ISprintProps> = (
       </div>
       <StoriesDroppable
         droppableProps={{droppableId: id, isDropDisabled: !allowedToDrop}}
-        className={`${styles.stories} ${allowedToDrop ? styles.allowedToDrop : styles.notAllowedToDrop}`}
+        className={`${styles.stories} ${isDragging ? (allowedToDrop ? styles.allowedToDrop : styles.notAllowedToDrop) : ''}`}
         stories={stories}
       />
     </div>

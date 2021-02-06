@@ -9,11 +9,13 @@ import {countPoints} from "../../components/sprint/Sprint";
 interface PlannerState {
   backlog: UserStoryData[];
   sprints: SprintData[];
+  currentlyDragged: boolean;
 }
 
 const initialState: PlannerState = {
   backlog: _.times(5).map(() => randomStory()),
-  sprints: _.times(5).map(() => randomSprint())
+  sprints: _.times(5).map(() => randomSprint()),
+  currentlyDragged: false
 }
 
 const getStory = (state: PlannerState, source: DraggableLocation) => {
@@ -65,15 +67,18 @@ export const plannerSlice = createSlice({
         }
       })
     },
-
+    setIsDragged: (state, {payload}: PayloadAction<boolean>) => {
+      state.currentlyDragged = payload;
+    }
   }
 });
 
 export const BACKLOG = 'Backlog';
 
-export const {moveCard, updateDroppables} = plannerSlice.actions;
+export const {moveCard, updateDroppables, setIsDragged} = plannerSlice.actions;
 
 export const selectBacklog = (state: RootState) => state.planner.backlog;
 export const selectSprints = (state: RootState) => state.planner.sprints;
+export const selectIsDragging = (state: RootState) => state.planner.currentlyDragged;
 
 export default plannerSlice.reducer;

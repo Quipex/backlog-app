@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 .container {
   background-color: #aeaeae;
   padding: 0.5em;
@@ -41,20 +43,20 @@
   padding: 0.3em 0.5em;
 
   &_overflowed {
-    background-color: #ff7777;
+    background-color: $rejectDrop__hover;
   }
 }
 
 .stories {
   flex-grow: 1;
   background-color: #e0e0e0;
-  border: 3px dotted #aeaeae;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .allowedToDrop {
-  background-color: #C6E2AA;
+  background-color: $allowToDrop;
 }
 
 .notAllowedToDrop {
-  background-color: #ff7777;
+  background-color: $rejectDrop;
 }
