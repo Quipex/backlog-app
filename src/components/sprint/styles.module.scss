@@ -8,6 +8,7 @@
   max-width: 330px + 14px;
   margin-right: 0.5em;
   transition: box-shadow 0.5s ease;
+  min-width: 21.5em;
 
   &_overflowed {
     box-shadow: 0 0 4px 1px #ff7777;
@@ -19,7 +20,7 @@
   flex-direction: row;
   padding-bottom: 0.5em;
   align-items: center;
-  gap: 3em;
+  gap: 0.5em;
   user-select: none;
 }
 
