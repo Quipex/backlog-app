@@ -4,6 +4,8 @@ import styles from './styles.module.scss';
 import {UserStoryData} from "../user_story/model";
 import StoriesDroppable from "../stories_droppable/StoriesDroppable";
 import {Button} from "semantic-ui-react";
+// @ts-ignore
+import AnimatedNumber from "animated-number-react";
 
 export function countPoints(stories: UserStoryData[]) {
   return stories.length !== 0 ? stories.map(st => st.points).reduce((prev, curr) => prev + curr) : 0;
@@ -33,7 +35,13 @@ const Sprint: React.FC<ISprintProps> = (
         </div>
         <Button onClick={setEditing} icon="pencil" compact/>
         <div className={`${styles.capacity} ${overflowed ? styles.capacity_overflowed : ''}`}>
-          {`${points} / ${maxPoints}`}
+          <AnimatedNumber
+            value={points}
+            formatValue={(val: number) => val.toFixed(0)}
+            duration={60}
+          />
+          &nbsp;
+          {`/ ${maxPoints}`}
         </div>
       </div>
       <StoriesDroppable
