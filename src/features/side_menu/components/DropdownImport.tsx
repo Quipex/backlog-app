@@ -23,11 +23,13 @@ const DropdownImport: React.FC<IDropdownImportProps> = () => {
       <StateImporter
         uniqueId={stateImporterId}
         importText="Importing state..."
+        successText="State imported!"
         onFileRead={dispatchStateImport}
       />
       <StateImporter
         uniqueId={storiesImporterId}
         importText="Importing stories..."
+        successText="Stories imported!"
         onFileRead={dispatchStoriesImport}
       />
       <Dropdown
