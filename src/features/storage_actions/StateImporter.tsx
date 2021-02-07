@@ -6,11 +6,12 @@ export interface IStateImporterProps {
   uniqueId: string;
   importText: string;
   successText: string;
+  extension: string;
   onFileRead: (data: string) => void;
 }
 
 const StateImporter: React.FC<IStateImporterProps> = (
-  {uniqueId, importText, onFileRead, successText}
+  {uniqueId, importText, onFileRead, successText, extension}
 ) => {
   const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,7 +40,6 @@ const StateImporter: React.FC<IStateImporterProps> = (
   });
 
   const handleFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('file changed');
     const {files} = ev.target;
     if (!files || files.length === 0) return;
     if (files.length > 1) {
@@ -53,7 +53,8 @@ const StateImporter: React.FC<IStateImporterProps> = (
 
   return (
     <>
-      <input ref={inputRef} id={uniqueId} type="file" onChange={handleFileInputChange} style={{display: "none"}}/>
+      <input ref={inputRef} id={uniqueId} type="file" onChange={handleFileInputChange} style={{display: "none"}}
+             accept={extension}/>
       <Modal open={isUploading} size="mini">
         <ModalContent>{importText}</ModalContent>
       </Modal>
