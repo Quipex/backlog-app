@@ -45,7 +45,6 @@ const DropdownImport: React.FC<IDropdownImportProps> = () => {
         <DropdownMenu>
           <DropdownItem onClick={() => startImport(stateImporterId)}>Import state...</DropdownItem>
           <DropdownItem onClick={() => exportStateAndAskDownload()}>Export state...</DropdownItem>
-          <DropdownItem>Export to PDF...</DropdownItem>
           <DropdownItem onClick={() => startImport(storiesImporterId)}>Import stories...</DropdownItem>
         </DropdownMenu>
       </Dropdown>
