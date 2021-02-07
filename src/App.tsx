@@ -5,6 +5,7 @@ import {DragDropContext} from "react-beautiful-dnd";
 import {useDispatch} from "react-redux";
 import {moveCard, setIsDragged, updateDroppables} from './features/planner/plannerSlice';
 import Editing from "./features/editing/Editing";
+import {ToastProvider} from "react-toast-notifications";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,10 +21,12 @@ function App() {
         dispatch(setIsDragged(false))
       }}
     >
-      <div className={styles.container}>
-        <Planner/>
-        <Editing/>
-      </div>
+      <ToastProvider>
+        <div className={styles.container}>
+          <Planner/>
+          <Editing/>
+        </div>
+      </ToastProvider>
     </DragDropContext>
   );
 }

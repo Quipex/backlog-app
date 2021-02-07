@@ -8,10 +8,13 @@ import {countPoints} from "../../components/sprint/Sprint";
 import {SourceProps, StoryEditingData} from "../editing/editingSlice";
 import {v4} from "uuid";
 
-interface PlannerState {
+interface PlannerState extends DataState{
+  currentlyDragged: boolean;
+}
+
+interface DataState {
   backlog: UserStoryData[];
   sprints: SprintData[];
-  currentlyDragged: boolean;
 }
 
 const initialState: PlannerState = {
@@ -84,12 +87,11 @@ export const plannerSlice = createSlice({
         const sprintIndex = state.sprints.findIndex(sp => sp.id === payload.id)
         state.sprints[sprintIndex] = payload;
       } else {
-        const sprintLength = state.sprints.length;
-        state.sprints[sprintLength] = {
+        state.sprints.push({
           ...payload,
           id: v4(),
           stories: []
-        };
+        });
       }
     },
 
@@ -115,6 +117,15 @@ export const plannerSlice = createSlice({
     removeStory: (state, {payload: {source, content: targetStory}}: PayloadAction<StoryEditingData>) => {
       if (!source) return;
       removeStoryFromState(source, state, targetStory.id);
+    },
+
+    importState: (state, {payload}: PayloadAction<DataState>) => {
+      state.backlog = payload.backlog;
+      state.sprints = payload.sprints;
+    },
+
+    importStories: (state, {payload}: PayloadAction<UserStoryData[]>) => {
+      state.backlog.push(...payload)
     }
   }
 });
@@ -128,7 +139,9 @@ export const {
   saveSprint,
   saveStory,
   removeStory,
-  removeSprint
+  removeSprint,
+  importState,
+  importStories
 } = plannerSlice.actions;
 
 export const selectBacklog = (state: RootState) => state.planner.backlog;

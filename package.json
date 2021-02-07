@@ -14,6 +14,7 @@
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
+    "@types/react-toast-notifications": "^2.4.0",
     "@types/uuid": "^8.3.0",
     "animated-number-react": "^0.1.1",
     "lodash": "^4.17.20",
@@ -23,6 +24,7 @@
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.0",
     "react-scripts": "4.0.1",
+    "react-toast-notifications": "^2.4.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "typescript": "~3.8.2"
