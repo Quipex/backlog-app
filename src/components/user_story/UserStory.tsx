@@ -26,7 +26,7 @@ const UserStoryCard: React.FC<IUserStoryProps> = (
   {story: {id, name, points, priority, risk}, index, setEditing}
 ) => (
   <Draggable draggableId={id} index={index}>
-    {provided => (
+    {(provided) => (
       <div
         {...provided.draggableProps}
         {...provided.dragHandleProps}

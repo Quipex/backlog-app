@@ -3,3 +3,7 @@
 .allowedToDrop {
   background-color: $allowToDrop__hover !important;
 }
+
+.droppableArea {
+  overflow-y: auto;
+}

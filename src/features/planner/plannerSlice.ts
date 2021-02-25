@@ -1,5 +1,4 @@
 import {randomStory, UserStoryData} from "../../components/user_story/model";
-import _ from "lodash";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../../app/store";
 import {randomSprint, SprintData} from "../../components/sprint/model";
@@ -8,7 +7,7 @@ import {countPoints} from "../../components/sprint/Sprint";
 import {SourceProps, StoryEditingData} from "../editing/editingSlice";
 import {v4} from "uuid";
 
-interface PlannerState extends DataState{
+interface PlannerState extends DataState {
   currentlyDragged: boolean;
 }
 
@@ -18,8 +17,16 @@ interface DataState {
 }
 
 const initialState: PlannerState = {
-  backlog: _.times(5).map(() => randomStory()),
-  sprints: _.times(5).map(() => randomSprint()),
+  backlog: [],
+  sprints: [
+    {
+      stories: [],
+      maxPoints: 20,
+      name: 'Sprint 1',
+      id: v4(),
+      allowedToDrop: true
+    }
+  ],
   currentlyDragged: false
 }
 
@@ -126,6 +133,14 @@ export const plannerSlice = createSlice({
 
     importStories: (state, {payload}: PayloadAction<UserStoryData[]>) => {
       state.backlog.push(...payload)
+    },
+
+    createRandomStory: (state) => {
+      state.backlog.push(randomStory())
+    },
+
+    createRandomSprint: state => {
+      state.sprints.push(randomSprint())
     }
   }
 });
@@ -141,7 +156,9 @@ export const {
   removeStory,
   removeSprint,
   importState,
-  importStories
+  importStories,
+  createRandomSprint,
+  createRandomStory
 } = plannerSlice.actions;
 
 export const selectBacklog = (state: RootState) => state.planner.backlog;

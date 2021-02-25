@@ -24,7 +24,7 @@ const StoriesDroppable: React.FC<IStoriesDroppableProps> = (
     <Droppable {...droppableProps}>
       {(provided, snapshot) => (
         <div
-          className={`${className} ${snapshot.draggingOverWith ? styles.allowedToDrop : ''}`}
+          className={`${className} ${styles.droppableArea} ${snapshot.draggingOverWith ? styles.allowedToDrop : ''}`}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

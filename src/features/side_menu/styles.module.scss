@@ -1,34 +1,38 @@
 @import "src/styles/variables";
 
 .container {
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #99d6ea;
   flex-shrink: 0;
-  width: 23em;
+  width: 22em;
+  box-shadow: 0 0 8px 0 black;
+  z-index: 10;
+  background-color: gray;
+  gap: 1em;
 }
 
 .menus {
-  background-color: #deffad;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 0.5em;
-  padding: 1em;
 }
 
 .stories {
   background-color: #faffc5;
   flex-grow: 1;
   padding: 1em;
+}
 
-  &_droppable {
-    height: 100%;
-    background-color: #faffc5;
-    display: flex;
-    flex-direction: column;
-    transition: background-color 0.2s ease;
-  }
+.stories_droppable {
+  flex-grow: 1;
+  height: 100%;
+  background-color: #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.2s ease;
 }
 
 .availableToDrop {

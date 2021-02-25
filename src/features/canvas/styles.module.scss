@@ -1,11 +1,19 @@
 .container {
-  background-color: lightblue;
-  overflow-x: auto;
-}
-
-.sprints {
-  display: flex;
-  flex-direction: row;
+  flex-grow: 1;
   height: 100%;
   padding: 1em;
+  background-color: #FAFBFC;
+  overflow-x: auto;
+
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em
+}
+
+.right_space {
+  &:after {
+    content: "❤";
+    user-select: none;
+    color: transparent;
+  }
 }

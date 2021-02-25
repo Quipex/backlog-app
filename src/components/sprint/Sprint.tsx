@@ -46,7 +46,7 @@ const Sprint: React.FC<ISprintProps> = (
       </div>
       <StoriesDroppable
         droppableProps={{droppableId: id, isDropDisabled: !allowedToDrop}}
-        className={`${styles.stories} ${isDragging ? (allowedToDrop ? styles.allowedToDrop : styles.notAllowedToDrop) : ''}`}
+        className={`${styles.stories_droppable} ${isDragging ? (allowedToDrop ? styles.allowedToDrop : styles.notAllowedToDrop) : ''}`}
         stories={stories}
       />
     </div>

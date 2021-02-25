@@ -5,7 +5,6 @@
   padding: 0.5em;
   display: flex;
   flex-direction: column;
-  margin-right: 0.5em;
   transition: box-shadow 0.5s ease;
   width: 22em;
   min-width: 22em;
@@ -49,7 +48,7 @@
   }
 }
 
-.stories {
+.stories_droppable {
   flex-grow: 1;
   background-color: #e0e0e0;
   transition: background-color 0.3s ease-in-out;
