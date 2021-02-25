@@ -1,12 +1,10 @@
 import {store} from "../../app/store";
 
 export const exportStateAndAskDownload = () => {
-  const planner = store.getState().planner;
-  const dataToExport = {
-    backlog: planner.backlog,
-    sprints: planner.sprints
-  }
+  const {backlog, sprints} = store.getState().planner;
+  const dataToExport = {backlog, sprints};
   askToDownload(JSON.stringify(dataToExport));
+  window.onbeforeunload = null;
 }
 
 const askToDownload = (text: string) => {
