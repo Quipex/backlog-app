@@ -40,7 +40,7 @@ const DropdownImport: React.FC<IDropdownImportProps> = () => {
         floating
         labeled
         button
-        className="icon"
+        className="icon button teal"
       >
         <DropdownMenu>
           <DropdownItem onClick={() => startImport(stateImporterId)}>Import state...</DropdownItem>

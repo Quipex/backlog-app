@@ -16,7 +16,7 @@ const DropdownNew: React.FC<IDropdownNewProps> = () => {
       button
       floating
       labeled
-      className="icon"
+      className="icon button teal"
     >
       <DropdownMenu>
         <DropdownItem onClick={() => dispatch(setEditingStory({} as any))}>User story...</DropdownItem>
