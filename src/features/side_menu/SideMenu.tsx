@@ -20,7 +20,7 @@ const SideMenu: React.FC<ISideMenuProps> = (
       <DropdownNew />
       <DropdownImport />
     </div>
-    <DropdownDebug />
+    {process.env.NODE_ENV !== 'production' && <DropdownDebug />}
     <StoriesDroppable
       droppableProps={{droppableId: BACKLOG}}
       className={`${styles.stories_droppable} ${isDragging ? styles.availableToDrop : ''}`}
