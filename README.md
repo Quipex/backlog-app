@@ -24,3 +24,18 @@ To use the template:
 3. Edit the data and export it as .csv.
 4. At the application click Storage > Import stories...
 5. Select the .csv file
+
+### Features
+- [x] Creation, editing, deleting user-stories
+- [x] Creation, editing, deleting sprints
+- [x] Moving user-stories across the board
+- [x] Importing/exporting state from/to file.json
+- [x] Batch-importing of user-stories to the backlog
+- [x] Alert user when there are unsaved changes
+- [ ] Support of the user-story dependencies
+  - [ ] Add/remove dependencies
+  - [ ] Display dependencies under the backlog stories
+  - [ ] Block moving if there are unplaced dependencies
+  - [ ] Block moving on the sprints that have dependencies story depends on
+- [ ] Show the state of the save (is it currently saved or not)
+- [ ] Undo/redo
